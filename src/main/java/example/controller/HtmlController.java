@@ -12,4 +12,22 @@ public class HtmlController {
         model.addAttribute("name", name);
         return "flame-graph-view";
     }
+
+    @GetMapping("/flame-graph-def")
+    public String flameGraphDef(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "flame-graph-view-def";
+    }
+
+    @GetMapping("/flame-graph-gzip")
+    public String flameGraphGzip(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "flame-graph-view-gzip";
+    }
+
+    @GetMapping("/flame-graph-gzip-proto")
+    public String flameGraphGzipProto(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "flame-graph-view-gzip-proto";
+    }
 }

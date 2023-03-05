@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 @Configuration
 //@EnableWebMvc
-public class AppConfig /*implements WebMvcConfigurer*/ {
+public class AppConfig implements WebMvcConfigurer {
     @Bean
     RestTemplate restTemplate(ProtobufHttpMessageConverter hmc) {
         return new RestTemplate(Arrays.asList(hmc));
@@ -34,11 +34,11 @@ public class AppConfig /*implements WebMvcConfigurer*/ {
             "classpath:/META-INF/resources/", "classpath:/resources/",
             "classpath:/static/", "classpath:/public/" };
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/**")
-//                .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
+    }
 
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {

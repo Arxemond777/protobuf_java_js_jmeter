@@ -1,6 +1,7 @@
 package example.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.BaseEncoding;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Struct;
@@ -26,24 +27,29 @@ public class StatesService {
     @Autowired
     private ObjectMapper om;
     private StatesProto.States states;
+    String asBase64;
     @PostConstruct
     public void postConstruct() throws IOException {
         System.out.println("InitSequenceBean: postConstruct");
-//        File file = ResourceUtils.getFile("classpath:static/17.1mb_3.10sec_states.json");
-        this.path = "classpath:static/test.json";
-//        this.path = "classpath:static/17.1mb_3.10sec_states.json";
-        File file = ResourceUtils.getFile(path);
+        File file = ResourceUtils.getFile("classpath:static/17.1mb_3.10sec_states.json");
+//        this.path = "classpath:static/test.json";
+        this.path = "classpath:static/17.1mb_3.10sec_states.json";
         StatesProto.States.Builder structBuilder = StatesProto.States.newBuilder();
         JsonFormat.parser().ignoringUnknownFields().merge(new InputStreamReader(new FileInputStream(ResourceUtils.getFile(path))), structBuilder);
         this.states = structBuilder.build();
+        asBase64 = BaseEncoding.base64().encode(this.states.toByteArray());
 //        String content = new String(Files.readAllBytes(file.toPath()));
 //        System.out.println(content.substring(0, 50));
-//        data = om.readValue(file, RequestStatesJsonDTO.class);
+        /*File file = ResourceUtils.getFile(path);
+        data = om.readValue(file, RequestStatesJsonDTO.class);*/
 //        inputStream = new FileInputStream(ResourceUtils.getFile(path));
 //        System.out.println(data);
         System.out.println("InitSequenceBean: postConstruct");
     }
 
+    public String getProtoStatesBase62() {
+        return asBase64;
+    }
     public StatesProto.States getProtoStates() {
 //        StatesProto.States states = null;
 //        try {
@@ -62,7 +68,15 @@ public class StatesService {
 //        } catch (IOException e) {
 //            System.err.println(e.getMessage());
 //        }
-        return this.states;
+        StatesProto.States.Builder structBuilder = StatesProto.States.newBuilder();
+        try {
+            JsonFormat.parser().ignoringUnknownFields().merge(new InputStreamReader(new FileInputStream(ResourceUtils.getFile(path))), structBuilder);
+            StatesProto.States res = structBuilder.build();
+            return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
 //        Struct.Builder structBuilder = Struct.newBuilder();
 //        JsonFormat.parser().ignoringUnknownFields().merge("json", structBuilder);
 ////        structBuilder.build().
@@ -71,6 +85,13 @@ public class StatesService {
     }
 
     public RequestStatesJsonDTO getStates() {
-        return this.data;
+        try {
+            File file = ResourceUtils.getFile(path);
+            return om.readValue(file, RequestStatesJsonDTO.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
