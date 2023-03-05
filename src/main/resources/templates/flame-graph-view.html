@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<script src="//cdn.rawgit.com/dcodeIO/protobuf.js/6.X.X/dist/protobuf.min.js"></script>
+<script>
+    function httpGet(theUrl) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", theUrl, false); // false for synchronous request
+
+        // via Cache-Control header:
+        xmlHttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
+        // fallbacks for IE and older browsers:
+        xmlHttp.setRequestHeader("Expires", "Tue, 01 Jan 1980 1:00:00 GMT");
+        xmlHttp.setRequestHeader("Pragma", "no-cache"); //Edit: I noticed this is required for Chrome some time ago... forgot to mention here
+
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+
+    // I retrieve the Base64 Encoded string
+    var msg = httpGet("/states");
+    console.log(msg)
+    function b64EncodeUnicode(str) {
+        // first we use encodeURIComponent to get percent-encoded UTF-8,
+        // then we convert the percent encodings into raw bytes which
+        // can be fed into btoa.
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+            function toSolidBytes(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+    }
+    // I transform such string to the typed array needed
+    buffer = Uint8Array.from(atob(b64EncodeUnicode(msg)), c => c.charCodeAt(0))
+    // Initiate the Protobuf library by opening the .proto file
+    protobuf.load("/statesProto.proto", function(err, root) {
+
+        // Retrieve the type of message I want to decode from the .proto file
+        var MyMessage = root.lookupType("States");
+
+        // Finally I can decode my message
+        var message = MyMessage.decode(buffer);
+
+        // message now contains an object with the properties specified in the .proto file
+        console.log(message)
+    });
+</script>
+<body>
+<p th:text="'Hello, ' + ${name} + '!'"/>
+</body>
+</html>

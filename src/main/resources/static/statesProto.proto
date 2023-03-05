@@ -1,0 +1,57 @@
+syntax = "proto3";
+//package example;
+option java_package = "example.proto";
+//option java_outer_classname = "BaeldungTraining";
+//import "google/protobuf/wrappers.proto";
+
+message States {
+  Rows model = 1;
+  string statusMessage = 2;
+  string status = 3;
+//  uint64 id = 1;
+//  string course_name = 2;
+//  repeated Student student = 3;
+}
+
+message Rows {
+  repeated RowElement rows = 1;
+//  string rows = 1;
+}
+
+message RowElement {
+  string entryId = 1;
+  repeated StatesData states = 2;
+}
+
+message StatesData {
+  uint64 start = 1;
+  uint64 end = 2;
+  optional string label = 3;
+  optional Style style = 4;
+}
+
+message Style {
+  optional string parentKey = 1;
+  optional Values values = 2;
+}
+
+message Values {
+  optional string style_name = 1 [json_name="style-name"];
+  optional string background_color = 2 [json_name="background-color"];
+}
+
+//message Student {
+//  int32 id = 1;
+//  string first_name = 2;
+//  string last_name = 3;
+//  string email = 4;
+//  repeated PhoneNumber phone = 5;
+//  message PhoneNumber {
+//    string number = 1;
+//    PhoneType type = 2;
+//  }
+//  enum PhoneType {
+//    MOBILE = 0;
+//    LANDLINE = 1;
+//  }
+//}
