@@ -25,5 +25,5 @@ unzip
 ~/Downloads/protocurl_1.5.6_darwin_amd64/bin/protocurl
 
 # Trace
-The trace is in the root directory trace-bad3.zip and can be run from open source [TraceCompass](https://www.eclipse.org/tracecompass/)
+The trace is in the root directory [trace-bad3.zip](https://github.com/Arxemond777/protobuf_java_js_jmeter/blob/master/trace-bad3.zip) and can be run from open source [TraceCompass](https://www.eclipse.org/tracecompass/)
 
