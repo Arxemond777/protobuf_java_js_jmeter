@@ -22,12 +22,10 @@
             console.time("httpGetParseOverhead")
             const res = xmlHttp.response; // Note: not req.responseText
             if (res) {
-                JSON.parse(res)
+                var json_res = JSON.parse(res)
                 console.time("httpGetDecodeJson")
 
                 console.timeEnd("httpGetDecodeJson")
-            } else {
-                console.log(666)
             }
 
             console.timeEnd("httpGetParseOverhead")

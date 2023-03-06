@@ -1,3 +1,8 @@
+# Description
+This is an example of comparasion between Text JSON VS GZIP JSON VS Protobuf VS GZIP+Protobuf
+The entry class is example.WebApp and can be run as a spring boot application
+
+
 # curl
 ## getStates
 `curl -X POST -H "Accept: ape: application/json; charset=utf-8' -d '{"parameters":{"requested_timerange":{"start":1673902684217260446,"end":1673902684997350038,"nbTimes":4807}}}' localhost:8080/states`
@@ -19,4 +24,6 @@ https://github.com/qaware/protocurl/releases -> protocurl_1.5.6_darwin_amd64.zip
 unzip
 ~/Downloads/protocurl_1.5.6_darwin_amd64/bin/protocurl
 
+# Trace
+The trace is in the root directory trace-bad3.zip and can be run from open source [TraceCompass](https://www.eclipse.org/tracecompass/)
 
