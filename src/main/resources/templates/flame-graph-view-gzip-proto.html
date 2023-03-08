@@ -22,6 +22,7 @@
         xmlHttp.responseType = "arraybuffer";
 
         xmlHttp.onload = (event) => {
+            var mock;
             console.timeEnd("httpGetLoadResponse")
             console.time("httpGetParseOverhead")
             const arrayBuffer = xmlHttp.response; // Note: not req.responseText
@@ -35,8 +36,9 @@
 
                     // Retrieve the type of message I want to decode from the .proto file
                     var MyMessage = root.lookupType("States");
-
+                    // console.log(MyMessage)
                     // Finally I can decode my message
+                    mock = MyMessage + 1
                     var message = MyMessage.decode(byteArray);
 
                 });
@@ -45,6 +47,7 @@
 
             console.timeEnd("httpGetParseOverhead")
             console.timeEnd("httpGetTotal")
+            return mock;
         };
 
         console.time("httpGetLoadResponse")

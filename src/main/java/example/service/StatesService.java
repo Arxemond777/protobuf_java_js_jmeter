@@ -25,9 +25,10 @@ public class StatesService {
     @PostConstruct
     public void postConstruct() throws IOException {
         System.out.println("InitSequenceBean: postConstruct");
-        File file = ResourceUtils.getFile("classpath:static/17.1mb_3.10sec_states.json");
+//        File file = ResourceUtils.getFile("classpath:static/17.1mb_3.10sec_states.json");
 //        this.path = "classpath:static/test.json";
         this.path = "classpath:static/17.1mb_3.10sec_states.json";
+//        this.path = "/Users/urijglusenkov/InteliJ/reserach_paper_optimization/src/main/resources/static/17.1mb_3.10sec_states.json";
         StatesProto.States.Builder structBuilder = StatesProto.States.newBuilder();
         JsonFormat.parser().ignoringUnknownFields().merge(new InputStreamReader(new FileInputStream(ResourceUtils.getFile(path))), structBuilder);
         this.states = structBuilder.build();
@@ -51,6 +52,7 @@ public class StatesService {
     public RequestStatesJsonDTO getStates() {
         try {
             File file = ResourceUtils.getFile(path);
+//            File file = new File(path);
             return om.readValue(file, RequestStatesJsonDTO.class);
         } catch (IOException e) {
             e.printStackTrace();
